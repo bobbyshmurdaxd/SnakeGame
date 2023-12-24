@@ -3,16 +3,21 @@ using System.Timers;
 
 namespace Snake
 {
+    // Position class to store coordinates of each segment of the snake or food.
     public record Position
     {
         public int Row { get; set; }
         public int Col { get; set; }
     }
 
+    // State class manages the game state.
     public class State
     {
+        // Constructor initializes game parameters and the snake.
         public State(int rows, int cols, int foodCount = 1)
         {
+
+            // Initialization of variables
             _rand = new Random();
             _rows = rows;
             _cols = cols;
@@ -22,12 +27,17 @@ namespace Snake
             _crashSnake = false;
             var head = GenRandomPos();
             _snake.Add(head);
+
+            // Sets the initial direction of the snake movement.
             _directionVert = 0;
             _directionHorz = head.Col > _cols / 2 ? -1 : 1;
+
+            // Adds food to the game board.
             AddFood();
             _eating = 0;
         }
 
+        // Generates a random position on the board.
         private Position GenRandomPos()
         {
             var pos = new Position();
@@ -36,6 +46,7 @@ namespace Snake
             return pos;
         }
 
+        // Adds food at a random location on the board.
         private void AddFood()
         {
             while (_food.Count < _foodCount)
@@ -46,6 +57,7 @@ namespace Snake
             }
         }
 
+        // Updates the direction of the snake based on keyboard input.
         public void UpdateDirection(ConsoleKey input)
         {
             switch (input)
@@ -73,6 +85,7 @@ namespace Snake
             }
         }
 
+        // Moves the snake in the current direction.
         public void Move()
         {
             if (_gameOver == false)
@@ -90,17 +103,18 @@ namespace Snake
             }
         }
 
-
+        // Checks if the snake has crashed into itself or the wall.
         private bool SnakeCrashed()
         {
             var head = _snake.Last();
-            // check if snake is out of boundaries
+            // Check if snake is out of boundaries
             if (head.Col < 0 || head.Col >= _cols || head.Row < 0 || head.Row >= _rows)
             {
                 _crashBorder = true;
                 return true;
             }
-            // check if snake crashed into itself
+
+            // Check if snake crashed into itself
             for (int i = 0; i < _snake.Count - 2; i++)
             {
                 if (head == _snake[i])
@@ -112,6 +126,7 @@ namespace Snake
             return false;
         }
 
+        // Evaluates the game state after each move.
         public bool Evaluate()
         {
             if (SnakeCrashed() == true)
@@ -131,6 +146,7 @@ namespace Snake
             return true;
         }
 
+        // Renders the game state to the console.
         public void Render(bool crashed = false)
         {
             if (crashed)
@@ -189,6 +205,7 @@ namespace Snake
         public int Score { get => _score; }
     }
 
+    // Game class encapsulates the game loop and interaction.
     class Game
     {
         public Game(int rows, int cols)
@@ -233,13 +250,14 @@ namespace Snake
             }
         }
 
+        // Additional methods and variables.
+
         private int _score;
 
         public int Score { get => _score; }
-
-
     }
 
+    // Main program class.
     class Program
     {
         static int Introduction(bool start)
@@ -268,6 +286,7 @@ namespace Snake
             }
         }
 
+        // Main game loop and high score tracking.
         static void Main()
         {
             bool firstGame = true;
