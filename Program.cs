@@ -40,10 +40,7 @@ namespace Snake
         // Generates a random position on the board.
         private Position GenRandomPos()
         {
-            var pos = new Position();
-            pos.Row = _rand.Next(0, _rows);
-            pos.Col = _rand.Next(0, _cols);
-            return pos;
+            return new Position { Row = _rand.Next(0, _rows), Col = _rand.Next(0, _cols) };
         }
 
         // Adds food at a random location on the board.
