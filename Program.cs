@@ -162,7 +162,7 @@ namespace Snake
                     Console.ForegroundColor = ConsoleColor.Gray;
                     if (_snake.Contains(pos))
                     {
-                        Console.ForegroundColor = _crashSnake ? ConsoleColor.Red : ConsoleColor.Green;
+                        Console.ForegroundColor = _crashSnake ? ConsoleColor.Red : ConsoleColor.Magenta;
                         Console.Write('█');
                     }
                     else if (_food.Contains(pos))
